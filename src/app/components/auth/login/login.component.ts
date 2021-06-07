@@ -24,16 +24,16 @@ export class LoginComponent implements OnInit {
 
   }
  
-  public async onSubmitLoginForm() {
+  public async onSubmitLoginForm(): Promise<void> {
     
     if(this.loginForm.valid){
 			try {
 
 				let loginResponse = await this._authService.login(this.loginForm.value['username'], this.loginForm.value['password']);
 				
-				if (loginResponse.success) {				
-					// this._authService.setIdTokenProps(loginResponse.idToken);
-          // this._router.navigateByUrl('search');
+				if (loginResponse.success) {	
+					this._authService.setIdTokenProps(loginResponse.idToken);
+          this._router.navigateByUrl('tokenManagement');
 				}
 				else {
 					this._toastr.error(loginResponse.errorMessage, 'Unable to Sign In');
@@ -44,5 +44,7 @@ export class LoginComponent implements OnInit {
 
 		}
   }
+
+  
 
 }

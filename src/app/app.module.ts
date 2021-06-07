@@ -10,12 +10,16 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ListTokensComponent } from './components/tokenManagement/list-tokens/list-tokens.component';
+import { NavbarComponent } from './components/common/navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ListTokensComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
