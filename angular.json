@@ -31,13 +31,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js",
-              "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"
+              "node_modules/datatables.net/js/jquery.dataTables.js"
             ]
           },
           "configurations": {

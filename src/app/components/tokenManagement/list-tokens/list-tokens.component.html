@@ -4,7 +4,7 @@
     </div>
     <div class="col-4 col-sm-4 col-md-2">
       <div class="btn btn-block btn-info" (click)="onAddTokenClick()">
-        Add Token
+        Add New Token
       </div>
     </div>
   </div>
@@ -27,13 +27,20 @@
                     <td>{{ token.appName }}</td>
                     <td>{{ token.token }}</td>
                     <td>{{ displayLocalTokenDateTime(token.expiryUtc) }}</td>
-                    <td>Actions here</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-info">Copy Token</button>
+                            <button type="button" class="btn btn-warning">Refresh</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
                   </tr> 
                 </tbody>
               </table>
         </div>
     </div>
   </div>
+  
   
   
   

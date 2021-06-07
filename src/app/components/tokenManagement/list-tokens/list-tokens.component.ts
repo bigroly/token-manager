@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { AppToken } from 'src/app/models/token/appToken.model';
 import { TokenService } from 'src/app/services/token.service';
+import { UtilityService } from 'src/app/services/utility.service';
+import { AddTokenComponent } from '../add-token/add-token.component';
 
 @Component({
   selector: 'app-list-tokens',
@@ -15,7 +18,7 @@ export class ListTokensComponent implements OnInit {
   public tokens: AppToken[] = [];
   public dtTrigger: Subject<any> = new Subject<any>();
   
-  constructor(private _tokenService: TokenService, private _toastr: ToastrService) { }
+  constructor(private _tokenService: TokenService, private _toastr: ToastrService, private _modalService: NgbModal, private _utils: UtilityService) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -45,7 +48,7 @@ export class ListTokensComponent implements OnInit {
   }
 
   public displayLocalTokenDateTime(expiryUtc: number): string{
-    return 'todo';
+    return this._utils.utcEpochToLocalString(expiryUtc);
   }
 
   ngOnDestroy(): void {
@@ -54,7 +57,14 @@ export class ListTokensComponent implements OnInit {
   }
 
   public onAddTokenClick(): void{
-    
+    const modalRef = this._modalService.open(AddTokenComponent, {size: 'xl', backdrop: 'static'});
+
+    modalRef.closed.subscribe(newToken => {
+      if(newToken != null){
+        this.tokens.push(newToken);
+        this.dtTrigger.next();
+      }
+    })
   }
 
 }

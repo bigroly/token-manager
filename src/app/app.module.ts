@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListTokensComponent } from './components/tokenManagement/list-tokens/list-tokens.component';
 import { NavbarComponent } from './components/common/navbar/navbar.component';
 import { DataTablesModule } from 'angular-datatables';
+import { AddTokenComponent } from './components/tokenManagement/add-token/add-token.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DataTablesModule } from 'angular-datatables';
     AppComponent,
     LoginComponent,
     ListTokensComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddTokenComponent
   ],
   imports: [
     BrowserModule,

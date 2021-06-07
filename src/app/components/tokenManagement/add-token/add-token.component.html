@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="col-12 p-3">
+        <form [formGroup]="addTokenForm" (ngSubmit)="onSubmitAddTokenForm()">
+            <div class="row">
+        
+                <div class="col-md-6 mt-2">
+                    <label for="appName" class="form-label">App Name</label>
+                    <input type="text" class="form-control" id="appName"
+                        formControlName="appName">
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <label for="token" class="form-label">Token</label>
+                    <input type="text" class="form-control" id="token"
+                        formControlName="token">
+                </div>
+                
+                <div class="col-md-6 mt-3">
+                    <span>This Token will Expire on: {{displayTokenExpiryAsString(this.tokenExpiry)}}</span>
+                </div>
+        
+            </div>
+
+            <div class="row">
+
+                <div class="col-6 col-sm-3 offset-sm-6 mt-4">
+                    <button class="btn btn-warning btn-block" (click)="onCancelClick();$event.preventDefault()">
+                        <i class="fas fa-times"></i> <span> Cancel </span>
+                    </button>
+                </div>
+        
+                <div class="col-6 col-sm-3 mt-4">
+                    <button class="btn btn-success btn-block" [disabled]='!addTokenForm.valid'>
+                        <span> Add Token </span>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
