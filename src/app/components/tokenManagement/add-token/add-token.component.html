@@ -3,20 +3,24 @@
         <form [formGroup]="addTokenForm" (ngSubmit)="onSubmitAddTokenForm()">
             <div class="row">
         
-                <div class="col-md-6 mt-2">
+                <div class="col-12 col-md-6 mt-2">
                     <label for="appName" class="form-label">App Name</label>
                     <input type="text" class="form-control" id="appName"
                         formControlName="appName">
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="col-12 col-md-6 mt-2">
                     <label for="token" class="form-label">Token</label>
                     <input type="text" class="form-control" id="token"
                         formControlName="token">
                 </div>
                 
-                <div class="col-md-6 mt-3">
+                <div class="col-12 col-md-6 mt-3">
                     <span>This Token will Expire on: {{displayTokenExpiryAsString(this.tokenExpiry)}}</span>
+                </div>
+
+                <div class="col-12 col-md-6 mt-3">
+                    <span><strong>Warning: </strong> Only one Token can belong per App Name at any time. Submitting with an existing AppName will overwrite any existing tokens.</span>
                 </div>
         
             </div>

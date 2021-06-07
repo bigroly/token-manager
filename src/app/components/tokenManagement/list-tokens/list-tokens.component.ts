@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { AppToken } from 'src/app/models/token/appToken.model';
@@ -13,41 +14,44 @@ import { AddTokenComponent } from '../add-token/add-token.component';
   styleUrls: ['./list-tokens.component.scss']
 })
 export class ListTokensComponent implements OnInit {
-  
+
   public dtOptions: DataTables.Settings = {};
   public tokens: AppToken[] = [];
+
+  @ViewChild(DataTableDirective, {static: false})
+  public dtElement: DataTableDirective | undefined;
   public dtTrigger: Subject<any> = new Subject<any>();
-  
+
   constructor(private _tokenService: TokenService, private _toastr: ToastrService, private _modalService: NgbModal, private _utils: UtilityService) { }
 
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2
+      pageLength: 10
     };
 
     this.getData();
   }
 
   private async getData(): Promise<void> {
-    try{
+    try {
       const getTokensResp = await this._tokenService.listTokens();
-      if(getTokensResp.success){
+      if (getTokensResp.success) {
         this.tokens = getTokensResp.tokens;
-        this.dtTrigger.next();
+        this.rerenderTable();
       }
-      else{
+      else {
         this._toastr.error('', 'Server error obtaining Token Information');
       }
     }
-    catch (e){
+    catch (e) {
       console.log(e);
       this._toastr.error('', 'Error obtaining Token Data');
     }
 
   }
 
-  public displayLocalTokenDateTime(expiryUtc: number): string{
+  public displayLocalTokenDateTime(expiryUtc: number): string {
     return this._utils.utcEpochToLocalString(expiryUtc);
   }
 
@@ -56,15 +60,47 @@ export class ListTokensComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  public onAddTokenClick(): void{
-    const modalRef = this._modalService.open(AddTokenComponent, {size: 'xl', backdrop: 'static'});
+  public onAddTokenClick(): void {
+    const modalRef = this._modalService.open(AddTokenComponent, { size: 'xl', backdrop: 'static' });
 
     modalRef.closed.subscribe(newToken => {
-      if(newToken != null){
-        this.tokens.push(newToken);
-        this.dtTrigger.next();
+      if (newToken != null) {
+        this.getData();
       }
     })
+  }
+
+  public async onDeleteTokenClick(token: AppToken): Promise<void> {
+    const confirmation = window.confirm(`Are you sure you want to delete the token for ${token.appName}?`);
+
+    if (confirmation) {
+      try {
+        const deleteresp = await this._tokenService.deleteToken(token)
+        if (deleteresp.success) {
+          this._toastr.success('', 'Token deleted');
+          this.getData();
+        }
+        else{
+          this._toastr.error(deleteresp.errorMessage, 'API Error deleting token');
+        }
+      }
+      catch(e){
+        console.log(e);
+        this._toastr.error('', 'Error deleting token');
+      }
+      
+    }
+  }
+
+  private rerenderTable(): void {
+    if(this.dtElement && this.dtElement.dtInstance){
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();  
+      });
+    }else{
+      this.dtTrigger.next();  
+    }      
   }
 
 }

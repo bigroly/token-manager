@@ -51,7 +51,7 @@ export class AddTokenComponent implements OnInit {
       
       if(apiResponse.success){
         this._toastr.success('', 'Token Added');
-        this._activeModal.dismiss(tokenToAdd);
+        this._activeModal.close(tokenToAdd);
       }else{
         this._toastr.error('apiResponse.errorMessage', 'API Error while adding new token');
       }

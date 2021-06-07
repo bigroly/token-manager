@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { DeleteTokenRequest } from '../contracts/tokens/delete.TokenRequest.model';
+import { DeleteTokenResponse } from '../contracts/tokens/delete.TokenResponse.model';
 import { GetListTokensResponse } from '../contracts/tokens/get.listTokensResponse.model';
 import { PostAddUpdateTokenRequest } from '../contracts/tokens/post.addUpdateTokenRequest.model';
 import { PostAddUpdateTokenResponse } from '../contracts/tokens/post.addUpdateTokenResponse.model';
@@ -29,6 +31,18 @@ export class TokenService {
     }
     let response = await this._http.post<PostAddUpdateTokenResponse>(`${environment.apiBaseUrl}/api/tokens`, request, { headers: this._authService.generateAuthHeader() }).toPromise();    
     return response;
+  }
+
+  public async deleteToken(record: AppToken): Promise<DeleteTokenResponse>{
+    const request: DeleteTokenRequest = {
+      token: record
+    };
+    const requestHeaders = {
+      headers: this._authService.generateAuthHeader(), body: request
+    };
+
+    let resp = await this._http.delete<DeleteTokenResponse>(`${environment.apiBaseUrl}/api/tokens`, requestHeaders).toPromise();
+    return resp;
   }
 
 }
