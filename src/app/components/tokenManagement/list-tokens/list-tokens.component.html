@@ -1,1 +1,35 @@
-<p>list-tokens works!</p>
+<div class="row">
+    <div class="col-8">
+      <h2>Manage Tokens</h2>
+    </div>
+    <div class="col-4">
+      <!-- <div class="btn btn-block btn-primary" (click)="onAddCarButtonClick()">
+        + Add Car
+      </div> -->
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-12">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let person of persons">
+                <td>{{ person.id }}</td>
+                <td>{{ person.firstName }}</td>
+                <td>{{ person.lastName }}</td>
+              </tr> -->
+            </tbody>
+          </table>
+    </div>
+  </div>
+  
+  
+  
