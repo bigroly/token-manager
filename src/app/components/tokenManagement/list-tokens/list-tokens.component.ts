@@ -73,7 +73,10 @@ export class ListTokensComponent implements OnInit {
   }
 
   public onCopyTokenClick(token: AppToken): void{
-    this._clipboard.copy(token.token);
+    const tokenToCopy: any = {
+      apiToken: token
+    }
+    this._clipboard.copy(JSON.stringify(tokenToCopy));
     this._toastr.success('','Token copied to Clipboard');
   }
 
