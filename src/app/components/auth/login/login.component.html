@@ -1,1 +1,31 @@
-<p>login works!</p>
+<div class="row mt-4">
+    <div class="col-12 col-md-4 offset-md-4 col-lg-2 offset-lg-5 mt-4">
+        <h3>Token Manager</h3>
+    </div>
+    <div class="col-12 col-md-4 offset-md-4 col-lg-2 offset-lg-5">
+        <div class="card p-2 ds-1 login-card">            
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
+                <div class="row">
+
+                    <div class="col-12">
+                        <label for="loginFormUsername" class="form-label">Username</label>
+                        <input type="email" class="form-control" id="loginFormUsername"
+                            placeholder="name@example.com" formControlName="username">
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <label for="loginFormPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginFormPassword"
+                            placeholder="********" formControlName="password">
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button class="btn btn-primary btn-block">
+                            <i class="fas fa-unlock-alt"></i> <span> Login </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

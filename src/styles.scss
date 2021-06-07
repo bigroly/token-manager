@@ -2,3 +2,9 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap');
+@import '~ngx-toastr/toastr';
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
