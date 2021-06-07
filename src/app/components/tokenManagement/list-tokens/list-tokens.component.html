@@ -1,33 +1,37 @@
 <div class="row">
-    <div class="col-8">
+    <div class="col-12 col-sm-8 col-md-10">
       <h2>Manage Tokens</h2>
     </div>
-    <div class="col-4">
-      <!-- <div class="btn btn-block btn-primary" (click)="onAddCarButtonClick()">
-        + Add Car
-      </div> -->
+    <div class="col-4 col-sm-4 col-md-2">
+      <div class="btn btn-block btn-info" (click)="onAddTokenClick()">
+        Add Token
+      </div>
     </div>
   </div>
   
   
   <div class="row">
-    <div class="col-12">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- <tr *ngFor="let person of persons">
-                <td>{{ person.id }}</td>
-                <td>{{ person.firstName }}</td>
-                <td>{{ person.lastName }}</td>
-              </tr> -->
-            </tbody>
-          </table>
+    <div class="col-12 mt-3 token-table">
+        <div class="card p-2"> 
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                  <tr>
+                    <th>App Name</th>
+                    <th>Token</th>
+                    <th>Expiry</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let token of tokens">
+                    <td>{{ token.appName }}</td>
+                    <td>{{ token.token }}</td>
+                    <td>{{ displayLocalTokenDateTime(token.expiryUtc) }}</td>
+                    <td>Actions here</td>
+                  </tr> 
+                </tbody>
+              </table>
+        </div>
     </div>
   </div>
   

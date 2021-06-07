@@ -77,4 +77,11 @@ export class AuthService {
     }
     return false;
   }
+  
+  public generateAuthHeader(): HttpHeaders{
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.idToken
+    });
+  }
 }
