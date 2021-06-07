@@ -29,8 +29,8 @@
                     <td>{{ displayLocalTokenDateTime(token.expiryUtc) }}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">Copy Token</button>
-                            <button type="button" class="btn btn-warning">Refresh</button>
+                            <button type="button" class="btn btn-info" (click)="onCopyTokenClick(token)">Copy Token</button>
+                            <button type="button" class="btn btn-warning" (click)="onRefreshTokenClick(token)">Refresh</button>
                             <button type="button" class="btn btn-danger" (click)="onDeleteTokenClick(token)">Delete</button>
                         </div>
                     </td>

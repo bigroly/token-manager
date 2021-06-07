@@ -7,6 +7,8 @@ import { AppToken } from 'src/app/models/token/appToken.model';
 import { TokenService } from 'src/app/services/token.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AddTokenComponent } from '../add-token/add-token.component';
+import {Clipboard} from "@angular/cdk/clipboard"
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-list-tokens',
@@ -22,7 +24,7 @@ export class ListTokensComponent implements OnInit {
   public dtElement: DataTableDirective | undefined;
   public dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private _tokenService: TokenService, private _toastr: ToastrService, private _modalService: NgbModal, private _utils: UtilityService) { }
+  constructor(private _tokenService: TokenService, private _toastr: ToastrService, private _modalService: NgbModal, private _utils: UtilityService, private _clipboard: Clipboard) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -33,7 +35,7 @@ export class ListTokensComponent implements OnInit {
     this.getData();
   }
 
-  private async getData(): Promise<void> {
+  private async getData(): Promise<void> { 
     try {
       const getTokensResp = await this._tokenService.listTokens();
       if (getTokensResp.success) {
@@ -70,6 +72,11 @@ export class ListTokensComponent implements OnInit {
     })
   }
 
+  public onCopyTokenClick(token: AppToken): void{
+    this._clipboard.copy(token.token);
+    this._toastr.success('','Token copied to Clipboard');
+  }
+
   public async onDeleteTokenClick(token: AppToken): Promise<void> {
     const confirmation = window.confirm(`Are you sure you want to delete the token for ${token.appName}?`);
 
@@ -87,8 +94,29 @@ export class ListTokensComponent implements OnInit {
       catch(e){
         console.log(e);
         this._toastr.error('', 'Error deleting token');
-      }
+      }      
+    }
+  }  
+
+  public async onRefreshTokenClick(token: AppToken): Promise<void>{
+    const newToken: AppToken = {
+      appName : token.appName,
+      token: token.token,
+      expiryUtc: + moment().utc().add(7, 'days').format('X')
+    }
+    try{
+      const apiResponse = await this._tokenService.addEditToken(newToken);
       
+      if(apiResponse.success){
+        this._toastr.success('', 'Token Expiry updated to 7 Days from now');
+      }else{
+        this._toastr.error('apiResponse.errorMessage', 'API Error while refreshing token');
+        this.getData();
+      }
+    }
+    catch(e){
+      console.log(e);
+      this._toastr.error('', 'Error refreshing token');
     }
   }
 

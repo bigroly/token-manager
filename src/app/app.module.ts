@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,9 +31,12 @@ import { AddTokenComponent } from './components/tokenManagement/add-token/add-to
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ClipboardModule,
     NgbModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-left'
+    }),
     DataTablesModule
   ],
   providers: [],
